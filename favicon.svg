@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rubin Advogados Associados favicon">
+  <rect width="512" height="512" rx="92" fill="#080D09"/>
+  <rect x="52" y="52" width="408" height="408" rx="62" fill="none" stroke="#C8A45E" stroke-width="11"/>
+  <text x="256" y="354"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="330"
+        font-weight="700"
+        fill="#E8CD91">R</text>
+</svg>
