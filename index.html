@@ -495,7 +495,7 @@
           </div>
 
           <div class="reveal" style="transition-delay:0.15s">
-            <form class="contact-form" id="contactForm" novalidate aria-label="Formulário de contato">
+            <form class="contact-form" id="contactForm" method="POST" action="https://formspree.io/f/xyzvoyer" novalidate aria-label="Formulário de contato">
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label" for="nome">Nome</label>
@@ -511,8 +511,8 @@
                 <input class="form-input" type="text" id="assunto" name="assunto" placeholder="Assunto da mensagem" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="mensagem">Mensagem</label>
-                <textarea class="form-textarea" id="mensagem" name="mensagem" placeholder="Descreva brevemente sua necessidade jurídica" required></textarea>
+                <label class="form-label" for="message">Mensagem</label>
+                <textarea class="form-textarea" id="message" name="message" placeholder="Descreva brevemente sua necessidade jurídica" required></textarea>
               </div>
               <p class="form-disclaimer">O envio de mensagem por este formulário não estabelece relação advogado-cliente. As informações enviadas serão tratadas com confidencialidade.</p>
               <button type="submit" class="btn btn-gold" style="align-self:flex-start">Enviar Mensagem <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
@@ -607,10 +607,25 @@
     const revealObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } }); }, { threshold: 0.12 });
     reveals.forEach(r => revealObs.observe(r));
 
-    // Contact form
+    // Contact form with Formspree
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
-    form.addEventListener('submit', e => { e.preventDefault(); const nome = form.nome.value.trim(); const email = form.email.value.trim(); const mensagem = form.mensagem.value.trim(); if (!nome || !email || !mensagem || mensagem.length < 10) return; form.style.display = 'none'; success.classList.add('visible'); });
+    form.addEventListener('submit', function(e) {
+      const nome = form.nome.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+
+      if (!nome || !email || !message || message.length < 10) {
+        e.preventDefault();
+        return;
+      }
+
+      // Show success message after form submission
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.classList.add('visible');
+      }, 100);
+    });
   </script>
 </body>
 </html>
