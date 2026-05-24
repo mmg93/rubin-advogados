@@ -610,21 +610,45 @@
     // Contact form with Formspree
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
       const nome = form.nome.value.trim();
       const email = form.email.value.trim();
       const message = form.message.value.trim();
 
+      // Validate
       if (!nome || !email || !message || message.length < 10) {
-        e.preventDefault();
+        alert('Por favor, preencha todos os campos corretamente.');
         return;
       }
 
-      // Show success message after form submission
-      setTimeout(() => {
-        form.style.display = 'none';
-        success.classList.add('visible');
-      }, 100);
+      try {
+        // Send form data to Formspree
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Show success message
+          form.style.display = 'none';
+          success.classList.add('visible');
+          // Reset form after showing success
+          setTimeout(() => {
+            form.reset();
+            form.style.display = 'flex';
+            success.classList.remove('visible');
+          }, 3000);
+        } else {
+          alert('Erro ao enviar mensagem. Tente novamente.');
+        }
+      } catch (error) {
+        alert('Erro ao enviar mensagem. Tente novamente.');
+      }
     });
   </script>
 </body>
